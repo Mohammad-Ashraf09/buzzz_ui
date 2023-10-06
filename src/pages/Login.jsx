@@ -35,7 +35,7 @@ const Login = ()=> {
 
   useEffect(()=>{
     const fetchAllUsers = async() =>{
-      const res = await axios.get("/api/users");
+      const res = await axios.get("/users");
       console.log('response--------------------',res?.data)
       setAllUsers(res?.data);
     }
