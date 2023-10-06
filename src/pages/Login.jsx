@@ -18,9 +18,9 @@ const Login = ()=> {
   const clickHandler = async(e)=>{
     e.preventDefault();
     setInvalidCredential(false);
-    console.log(allUsers)
-    const item = Object.values(allUsers)?.filter((item)=> item.email === email.current.value);
-    console.log(item)
+    console.log('allUsers---------------',allUsers)
+    const item = Object.values(allUsers)?.filter((item)=> item.email === email?.current?.value);
+    console.log('item--------------------',item)
 
     if(item.length>0){
       const validPassword = await bcrypt.compare(password.current.value, item[0].password)
@@ -36,7 +36,8 @@ const Login = ()=> {
   useEffect(()=>{
     const fetchAllUsers = async() =>{
       const res = await axios.get("/users");
-      setAllUsers(res.data);
+      console.log('response--------------------',res?.data)
+      setAllUsers(res?.data);
     }
     fetchAllUsers();
   },[])
