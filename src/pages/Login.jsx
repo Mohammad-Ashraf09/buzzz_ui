@@ -35,7 +35,7 @@ const Login = ()=> {
 
   useEffect(()=>{
     const fetchAllUsers = async() =>{
-      const res = await axios.get("https://buzzz-backend.vercel.app/users");
+      const res = await axios.get("/users");
       console.log('response--------------------',res?.data)
       setAllUsers(res?.data);
     }
