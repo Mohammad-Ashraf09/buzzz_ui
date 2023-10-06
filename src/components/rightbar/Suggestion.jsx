@@ -13,7 +13,7 @@ const Suggestion = ({socket}) => {
 
     useEffect(()=>{
         const fetchFollowings = async() =>{
-            const res = await axios.get("users/"+user?._id);
+            const res = await axios.get("/users/"+user?._id);
             setFollowing(res.data.followings);
         }
         fetchFollowings();
@@ -21,7 +21,7 @@ const Suggestion = ({socket}) => {
 
     useEffect(()=>{
         const fetchAllUsers = async() =>{
-            const res = await axios.get("users/");
+            const res = await axios.get("/users/");
             setAllUsers(res.data);
         }
         fetchAllUsers();

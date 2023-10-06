@@ -68,7 +68,7 @@ const NestedComment = ({
 
     const likeCommentHandler = async() =>{
         try{
-            await axios.put("posts/"+ postId +"/comment/"+ commentId + "/like/" + particularNestedComment?.nestedCommentId + "/nestedLike/", {userId: currentUserId});
+            await axios.put("/posts/"+ postId +"/comment/"+ commentId + "/like/" + particularNestedComment?.nestedCommentId + "/nestedLike/", {userId: currentUserId});
 
             setNoOfLikes(isLiked ? noOfLikes-1 : noOfLikes+1);
             setIsLiked(!isLiked);
@@ -87,7 +87,7 @@ const NestedComment = ({
         try{
             const remove = window.confirm("Are you sure, you want to remove this comment?");
             if(remove){
-                await axios.put("posts/"+ postId +"/comment/"+ commentId +  "/removeNestedComment/", {nestedCommentId: particularNestedComment?.nestedCommentId});
+                await axios.put("/posts/"+ postId +"/comment/"+ commentId +  "/removeNestedComment/", {nestedCommentId: particularNestedComment?.nestedCommentId});
                 // setNumberOfComments(numberOfComments-1);
                 setNestedComments((prev)=> prev.filter((item)=> item.nestedCommentId !== particularNestedComment?.nestedCommentId))
 

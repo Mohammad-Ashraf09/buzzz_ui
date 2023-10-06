@@ -176,7 +176,7 @@ const Messenger = () => {
 
   useEffect(()=>{
     const fetchFollowings = async() =>{
-      const res = await axios.get("users/"+currentUser._id);
+      const res = await axios.get("/users/"+currentUser._id);
       const arr = res.data.followings                    // array of objects de raha hai ye
       setFollowing(arr);
     }

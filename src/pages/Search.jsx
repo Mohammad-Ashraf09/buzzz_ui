@@ -22,7 +22,7 @@ const Search = () => {
     useEffect(()=>{
         const fetchAllUsers = async() =>{
             try{
-                const res = await axios.get("users/");
+                const res = await axios.get("/users");
                 const processedData = await Promise.all(res?.data?.map((item)=>{
                     const obj = {
                         _id: item?._id,

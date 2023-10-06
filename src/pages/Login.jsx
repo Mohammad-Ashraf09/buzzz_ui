@@ -32,7 +32,7 @@ const Login = ()=> {
 
   useEffect(()=>{
     const fetchAllUsers = async() =>{
-      const res = await axios.get("users");
+      const res = await axios.get("/users");
       setAllUsers(res.data);
     }
     fetchAllUsers();

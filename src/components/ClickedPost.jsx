@@ -94,7 +94,7 @@ const ClickedPost = ({
 
     const likeHandler = async() =>{
         try{
-            await axios.put("posts/"+ _id +"/like", {userId: currentUserId});
+            await axios.put("/posts/"+ _id +"/like", {userId: currentUserId});
 
             setLik(isLiked ? lik-1 : lik+1);
             setLike(isLiked ? lik-1 : lik+1);
@@ -117,7 +117,7 @@ const ClickedPost = ({
                 setColor2("rgb(108, 104, 104)");
                 setIsDisLiked(false);
                 setIsDisLik(false);
-                await axios.put("posts/"+ _id +"/dislike", {userId: currentUserId});
+                await axios.put("/posts/"+ _id +"/dislike", {userId: currentUserId});
             }
 
             notificationHandler("liked");
@@ -127,7 +127,7 @@ const ClickedPost = ({
   
     const dislikeHandler = async() =>{
         try{
-            await axios.put("posts/"+ _id +"/dislike", {userId: currentUserId})
+            await axios.put("/posts/"+ _id +"/dislike", {userId: currentUserId})
 
             setDisLik(isDisLiked ? dislik-1 : dislik+1);
             setDisLike(isDisLiked ? dislik-1 : dislik+1);
@@ -150,7 +150,7 @@ const ClickedPost = ({
                 setColor("rgb(108, 104, 104)");
                 setIsLiked(false);
                 setIsLik(false);
-                await axios.put("posts/"+ _id +"/like", {userId: currentUserId});
+                await axios.put("/posts/"+ _id +"/like", {userId: currentUserId});
             }
 
             notificationHandler("disliked");
@@ -181,7 +181,7 @@ const ClickedPost = ({
             }
 
             try{
-                await axios.put("posts/"+ _id +"/comment", newComment);
+                await axios.put("/posts/"+ _id +"/comment", newComment);
 
                 setNumberOfCommentsForThisComponent(numberOfCommentsForThisComponent + 1);
                 setNumberOfComments(numberOfCommentsForThisComponent + 1);
@@ -224,7 +224,7 @@ const ClickedPost = ({
             }
         
             try{
-                await axios.put("posts/"+ _id +"/comment/"+ particularCommentId + "/reply", newNestedComment);
+                await axios.put("/posts/"+ _id +"/comment/"+ particularCommentId + "/reply", newNestedComment);
                 setCommentedText("");
                 
                 notificationHandler("commented");
@@ -261,7 +261,7 @@ const ClickedPost = ({
     
         if(commentedText){
           try{
-            await axios.put("posts/"+ _id +"/comment/"+ particularCommentId + "/edit", {updatedComment: commentedText});
+            await axios.put("/posts/"+ _id +"/comment/"+ particularCommentId + "/edit", {updatedComment: commentedText});
             setCommentedText("");
             
             notificationHandler("commented");

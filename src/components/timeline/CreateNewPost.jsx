@@ -47,7 +47,7 @@ const CreateNewPost = () => {
 
   useEffect(()=>{
     const fetchFollowings = async() =>{
-      const res = await axios.get("users/"+currentUser._id);
+      const res = await axios.get("/users/"+currentUser._id);
       setFollowing(res.data.followings);
     }
     fetchFollowings();
