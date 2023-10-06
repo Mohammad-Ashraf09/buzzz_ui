@@ -17,7 +17,7 @@ const Login = ()=> {
   const clickHandler = async(e)=>{
     e.preventDefault();
     setInvalidCredential(false);
-    const item = allUsers.filter((item)=> item.email === email.current.value);
+    const item = allUsers?.filter((item)=> item.email === email.current.value);
 
     if(item.length>0){
       const validPassword = await bcrypt.compare(password.current.value, item[0].password)
