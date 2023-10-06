@@ -13,11 +13,14 @@ const Login = ()=> {
   const email = useRef();
   const password = useRef();
   const {dispatch} = useContext(AuthContext);
+  console.log(allUsers)
   
   const clickHandler = async(e)=>{
     e.preventDefault();
     setInvalidCredential(false);
-    const item = allUsers?.filter((item)=> item.email === email.current.value);
+    console.log(allUsers)
+    const item = Object.values(allUsers)?.filter((item)=> item.email === email.current.value);
+    console.log(item)
 
     if(item.length>0){
       const validPassword = await bcrypt.compare(password.current.value, item[0].password)
