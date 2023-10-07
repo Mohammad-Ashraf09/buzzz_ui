@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import {loginCall} from "../apiCalls"
 import { AuthContext } from "../context/AuthContext";
 import axios from 'axios';
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 
 const Login = ()=> {
@@ -14,6 +15,8 @@ const Login = ()=> {
   const password = useRef();
   const {dispatch} = useContext(AuthContext);
   console.log(allUsers)
+
+  console.log(REACT_APP_BASE_URL);
   
   const clickHandler = async(e)=>{
     e.preventDefault();
@@ -35,7 +38,7 @@ const Login = ()=> {
 
   useEffect(()=>{
     const fetchAllUsers = async() =>{
-      const res = await axios.get("https://buzzz-backend.vercel.app/api/users");
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users`);
       console.log('response--------------------',res?.data)
       setAllUsers(res?.data);
     }
