@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import { REACT_APP_BASE_URL } from '../../config/keys';
 
 const SuggestionPerson = ({users, onlineUsers}) => {
   const [followed, setFollowed] = useState(false);
@@ -14,14 +15,14 @@ const SuggestionPerson = ({users, onlineUsers}) => {
   const followHandler = async () =>{
     try{
       if(followed){
-        await axios.put("/users/"+ users._id + "/unfollow", {
+        await axios.put(`${REACT_APP_BASE_URL}/users/${users._id}/unfollow`, {
           userId: currentUser._id,
           name: users.fname+" "+users.lname,
           dp: users.profilePicture?.includes('https://') ? users.profilePicture : `/assets/${users.profilePicture}`,
         })
       }
       else{
-        await axios.put("/users/"+ users._id + "/follow", {
+        await axios.put(`${REACT_APP_BASE_URL}/users/${users._id}/follow`, {
           userId: currentUser._id,
           name: users.fname+" "+users.lname,
           dp: users.profilePicture?.includes('https://') ? users.profilePicture : `/assets/${users.profilePicture}`,

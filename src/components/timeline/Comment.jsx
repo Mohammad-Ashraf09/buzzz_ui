@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import NestedComment from './NestedComment';
 import { useNavigate } from 'react-router-dom';
+import { REACT_APP_BASE_URL } from '../../config/keys';
 
 // user --> jisne post dali hai
 // currentUserId --> jisne login kiya hua hai uski id
@@ -36,7 +37,7 @@ const Comment = ({
     
     useEffect(()=>{
         const fetchParticularComment = async() =>{
-            const res = await axios.get("/posts/"+ _id +"/comment/"+ commentId);
+            const res = await axios.get(`${REACT_APP_BASE_URL}/posts/${_id}/comment/${commentId}`);
 
             setParticularComment(res.data);
             setIsLiked(res.data?.commentLikes.includes(currentUserId));
@@ -49,7 +50,7 @@ const Comment = ({
 
     useEffect(()=>{
         const fetchUser = async() =>{
-            const res = await axios.get(`/users/${particularComment?.id}`);
+            const res = await axios.get(`${REACT_APP_BASE_URL}/users/${particularComment?.id}`);
             setCommentUser(res.data);
           }
           fetchUser();
@@ -57,7 +58,7 @@ const Comment = ({
 
     const likeCommentHandler = async() =>{
         try{
-            await axios.put("/posts/"+ _id +"/comment/"+ particularComment?.commentId + "/like", {userId: currentUserId});
+            await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/comment/${particularComment?.commentId}/like`, {userId: currentUserId});
 
             setNoOfLikes(isLiked ? noOfLikes-1 : noOfLikes+1);
             setIsLiked(!isLiked);
@@ -74,24 +75,18 @@ const Comment = ({
 
     const deleteCommentHandler = async() =>{
         try{
-            console.log(particularComment.commentId)
             const remove = window.confirm("Are you sure, you want to remove this comment?");
             if(remove){
-                console.log(particularComment.commentId)
-                await axios.put("/posts/"+ _id +"/comment/"+ particularComment?.commentId);
-                console.log(particularComment.commentId)
+                await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/comment/${particularComment?.commentId}`);
                 setNumberOfComments(numberOfComments-1);
-                console.log(particularComment.commentId)
                 if(showParticularPost)
                     setNumberOfCommentsForPopupPost(numberOfComments-1);
-                console.log(particularComment.commentId)
                 setTotalComment((prev)=> prev.filter((item)=> item.commentId !== particularComment?.commentId))
-                console.log(particularComment.commentId)
 
                 // notificationHandler("commented");
             }
         }
-        catch(err){}
+        catch(err){console.log(err)}
     }
 
     const clickHandler = async() =>{

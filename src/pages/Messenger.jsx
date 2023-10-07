@@ -14,6 +14,7 @@ import Compressor from 'compressorjs';
 import ReactPlayer from 'react-player';
 import Bottombar from '../components/Bottombar';
 import { Link } from 'react-router-dom';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const Messenger = () => {
   const {user:currentUser} = useContext(AuthContext);
@@ -57,7 +58,7 @@ const Messenger = () => {
     setSocket(io("ws://localhost:8100"));
 
     const fetchUser = async() =>{
-      const res = await axios.get(`/users/${currentUser._id}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
       setUser(res.data);
     }
     fetchUser();
@@ -114,12 +115,12 @@ const Messenger = () => {
   useEffect(()=>{
     const getConversations = async()=>{
       try{
-        const res = await axios.get("/conversations/"+currentUser._id);  // logged in user ke jitne bhi conversations hai sab return karega
+        const res = await axios.get(`${REACT_APP_BASE_URL}/conversations/${currentUser._id}`);  // logged in user ke jitne bhi conversations hai sab return karega
 
         const conver = await Promise.all(res?.data?.map((item)=>{
           const fetchUserDataOfConversationList = async()=>{
             try{
-              const response = await axios.get(`/users/${item?.IDs[0] !== currentUser._id ? item?.IDs[0] : item?.IDs[1]}`);
+              const response = await axios.get(`${REACT_APP_BASE_URL}/users/${item?.IDs[0] !== currentUser._id ? item?.IDs[0] : item?.IDs[1]}`);
               const obj = {
                 ...item,
                 otherMemberData: {
@@ -146,7 +147,7 @@ const Messenger = () => {
 
     const getNotifications = async()=>{
       try{
-        const res = await axios.get("/messages/noOfNotifications/"+currentUser._id);
+        const res = await axios.get(`${REACT_APP_BASE_URL}/messages/noOfNotifications/${currentUser._id}`);
         setRawNotificationsOfCurrentUser(res.data.receiverId)
       }
       catch(err){
@@ -160,7 +161,7 @@ const Messenger = () => {
     const getMessages = async() =>{
       if(currentChat){
         try{
-          const res = await axios.get("/messages/"+currentChat?._id)
+          const res = await axios.get(`${REACT_APP_BASE_URL}/messages/${currentChat?._id}`)
           setMessages(res.data);
         }catch(err){
           console.log(err);
@@ -176,7 +177,7 @@ const Messenger = () => {
 
   useEffect(()=>{
     const fetchFollowings = async() =>{
-      const res = await axios.get("/users/"+currentUser._id);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
       const arr = res.data.followings                    // array of objects de raha hai ye
       setFollowing(arr);
     }
@@ -210,7 +211,7 @@ const Messenger = () => {
 
   const removeNotificationFromDatabase = async(id) => {
     try{
-      await axios.put("/messages/noOfNotifications/"+currentUser._id, {friendId: id});
+      await axios.put(`${REACT_APP_BASE_URL}/messages/noOfNotifications/${currentUser._id}`, {friendId: id});
     }
     catch(err){
       console.log(err);
@@ -232,7 +233,7 @@ const Messenger = () => {
     if(isChatInOpenState !== currentUser._id){
       const increaseCountInDatabase = async()=>{
         try{
-          await axios.put("/messages/noOfNotifications/", {
+          await axios.put(`${REACT_APP_BASE_URL}/messages/noOfNotifications`, {
               user1: currentUser._id,
               user2: currentChat?.IDs[0]!==currentUser._id
                 ? currentChat?.IDs[0]
@@ -358,7 +359,7 @@ const Messenger = () => {
         };
 
         try{
-          const res = await axios.post("/messages", message);
+          const res = await axios.post(`${REACT_APP_BASE_URL}/messages`, message);
           setMessages([...(messages.slice(0, -1)), res.data]);     // removing the preview media message first then adding the last message from database
           setNoOfNewmessages(0)
           notificationHandler();
@@ -404,7 +405,7 @@ const Messenger = () => {
         };
 
         try{
-          const res = await axios.post("/messages", message);
+          const res = await axios.post(`${REACT_APP_BASE_URL}/messages`, message);
           setMessages([...messages, res.data]);
           setNewMessage("");
           setIsReply(false);
@@ -444,7 +445,7 @@ const Messenger = () => {
     const confirm = (currentChat && messages?.length) ? window.confirm('Are You Sure, want to clear chat') : null;
     if(confirm){
       try{
-        await axios.delete("/messages/delete/"+currentChat._id);       // form clearing whole chat
+        await axios.delete(`${REACT_APP_BASE_URL}/messages/delete/${currentChat._id}`);       // form clearing whole chat
       }
       catch(err){
         console.log(err);

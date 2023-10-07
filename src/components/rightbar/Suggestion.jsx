@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import Sugg from './Sugg';
+import { REACT_APP_BASE_URL } from '../../config/keys';
 
 const Suggestion = ({socket}) => {
     const {user} = useContext(AuthContext);
@@ -13,7 +14,7 @@ const Suggestion = ({socket}) => {
 
     useEffect(()=>{
         const fetchFollowings = async() =>{
-            const res = await axios.get("/users/"+user?._id);
+            const res = await axios.get(`${REACT_APP_BASE_URL}/users/${user?._id}`);
             setFollowing(res.data.followings);
         }
         fetchFollowings();
@@ -21,7 +22,7 @@ const Suggestion = ({socket}) => {
 
     useEffect(()=>{
         const fetchAllUsers = async() =>{
-            const res = await axios.get("/users/");
+            const res = await axios.get(`${REACT_APP_BASE_URL}/users`);
             setAllUsers(res.data);
         }
         fetchAllUsers();
@@ -53,7 +54,7 @@ const Suggestion = ({socket}) => {
             </div>
             <div className="suggestion-wrapper">
                 <ul className="suggestion-list">
-                    {allUsers.filter((x)=>x.fname.toLowerCase().includes(query)).map((data)=>(
+                    {Object.values(allUsers)?.filter((x)=>x.fname.toLowerCase().includes(query)).map((data)=>(
                         <Sugg key={data._id} users={data} myFollowings={following} onlineUsers={onlineUsers} />
                     ))}
                 </ul>

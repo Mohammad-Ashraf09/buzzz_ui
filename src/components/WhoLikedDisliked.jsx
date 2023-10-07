@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const WhoLikedDisliked = ({userId}) => {
   const [user, setUser] = useState({});
 
   useEffect(()=>{
     const fetchUser = async() =>{
-      const res = await axios.get(`/users/${userId}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${userId}`);
       setUser(res.data);
     }
     fetchUser();

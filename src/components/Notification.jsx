@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'timeago.js';
 import ClickedPost from './ClickedPost';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const Notification = ({_id, type, time, postId, senderId, currentUser, background, renderNotification, setRenderNotification}) => {
     const [post, setPost] = useState({});
@@ -23,7 +24,7 @@ const Notification = ({_id, type, time, postId, senderId, currentUser, backgroun
 
     useEffect(()=>{
         const fetchNotificationSenderData = async() =>{
-            const res = await axios.get(`/users/${senderId}`);
+            const res = await axios.get(`${REACT_APP_BASE_URL}/users/${senderId}`);
             setSenderDpAndName({
                 dp: res?.data?.profilePicture?.includes('https://') ? res?.data?.profilePicture : `/assets/${res?.data?.profilePicture}`,
                 name: res?.data?.fname + ' ' + res?.data?.lname
@@ -34,7 +35,7 @@ const Notification = ({_id, type, time, postId, senderId, currentUser, backgroun
 
     useEffect(()=>{
         const fetchParticularPost = async() =>{
-            const res = await axios.get("/posts/" + postId);
+            const res = await axios.get(`${REACT_APP_BASE_URL}/posts/${postId}`);
 
             setPost(res.data);
             setLik(res.data.likes.length)
@@ -62,7 +63,7 @@ const Notification = ({_id, type, time, postId, senderId, currentUser, backgroun
 
     const deleteNotificationHandler = async()=>{
         try{
-            await axios.delete("/notifications/"+ _id);
+            await axios.delete(`${REACT_APP_BASE_URL}/notifications/${_id}`);
         }
         catch(err){}
         

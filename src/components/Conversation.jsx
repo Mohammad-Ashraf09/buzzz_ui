@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const Conversation = ({
   index,
@@ -55,13 +56,13 @@ const Conversation = ({
     const confirm = window.confirm('Are You Sure, want to delete conversation');
     if(confirm){
       try{
-        await axios.delete("/conversations/delete/"+conversation._id);       // for deleting members in left portion
+        await axios.delete(`${REACT_APP_BASE_URL}/conversations/delete/${conversation._id}`);       // for deleting members in left portion
       }
       catch(err){
         console.log(err);
       }
       try{
-        await axios.delete("/messages/delete/"+conversation._id);       // form clearing whole chat
+        await axios.delete(`${REACT_APP_BASE_URL}/messages/delete/${conversation._id}`);       // form clearing whole chat
       }
       catch(err){
         console.log(err);

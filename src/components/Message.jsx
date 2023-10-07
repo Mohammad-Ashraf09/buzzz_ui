@@ -5,6 +5,7 @@ import ClickedMedia from './ClickedMedia';
 import ReactPlayer from 'react-player';
 import { ref, deleteObject } from "firebase/storage";
 import { storage } from "../firebase";
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const Message = ({
   userId,
@@ -55,7 +56,7 @@ const Message = ({
     const confirm = window.confirm('Are You Sure, want to delete message');
     if(confirm){
       try{
-        await axios.delete("/messages/delete/message/"+_id);
+        await axios.delete(`${REACT_APP_BASE_URL}/messages/delete/message/${_id}`);
       }
       catch(err){
         console.log(err);

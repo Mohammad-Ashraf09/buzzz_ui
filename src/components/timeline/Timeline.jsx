@@ -14,6 +14,7 @@ import WhoLikedDisliked from '../WhoLikedDisliked';
 import Comment from "./Comment";
 import { ref, deleteObject } from "firebase/storage";
 import { storage } from "../../firebase";
+import { REACT_APP_BASE_URL } from '../../config/keys';
 
 const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
   const {_id, userId, createdAt, location, edited, desc, taggedFriends, img, likes, dislikes, comments} = post;
@@ -76,24 +77,25 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
 
   useEffect(()=>{
     const fetchUser = async() =>{
-      const res = await axios.get(`/users/${currentUser._id}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
       setUser(res.data);
+      setFollowing(res.data.followings);
     }
     fetchUser();
   },[currentUser._id]);
 
-  useEffect(()=>{
-    const fetchFollowings = async() =>{
-      const res = await axios.get("/users/"+currentUser._id);
-      const arr = res.data.followings
-      setFollowing(arr);
-    }
-    fetchFollowings();
-  },[currentUser._id]);
+  // useEffect(()=>{
+  //   const fetchFollowings = async() =>{
+  //     const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
+  //     const arr = res.data.followings
+  //     setFollowing(arr);
+  //   }
+  //   fetchFollowings();
+  // },[currentUser._id]);
 
   useEffect(()=>{
     const fetchPostUser = async() =>{
-      const res = await axios.get(`/users/${userId}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${userId}`);
       setPostUser(res.data);
       setClr(isLik ? "#417af5" : "rgb(108, 104, 104)");
       setClr2(isDisLik ? "rgba(252, 5, 5,0.8)" : "rgb(108, 104, 104)");
@@ -126,7 +128,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
       }
       
       try{
-        await axios.post("/notifications/", notification);
+        await axios.post(`${REACT_APP_BASE_URL}/notifications`, notification);
       }
       catch(err){}
       
@@ -137,7 +139,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
       else{
         const increaseCountInDatabase = async()=>{
           try{
-            await axios.put("/notifications/noOfNotifications/"+ postUser?._id);  // else increase array length of noOfNotifications by 1
+            await axios.put(`${REACT_APP_BASE_URL}/notifications/noOfNotifications/${postUser?._id}`);  // else increase array length of noOfNotifications by 1
           }
           catch(err){}
         }
@@ -148,7 +150,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
 
   const likeHandler = async() =>{
     try{
-      await axios.put("/posts/"+ _id +"/like", {userId: currentUser._id});
+      await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/like`, {userId: currentUser._id});
 
       setLik(isLiked ? lik-1 : lik+1);
       setIsLiked(!isLiked)
@@ -162,7 +164,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
         setDisLik(disLik-1);
         setClr2("rgb(108, 104, 104)");   //grey
         setIsDisLiked(false);
-        await axios.put("/posts/"+ _id +"/dislike", {userId: currentUser._id});
+        await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/dislike`, {userId: currentUser._id});
       }
 
       notificationHandler("liked");
@@ -172,7 +174,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
   
   const dislikeHandler = async() =>{
     try{
-      await axios.put("/posts/"+ _id +"/dislike", {userId: currentUser._id})
+      await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/dislike`, {userId: currentUser._id})
 
       setDisLik(isDisLiked ? disLik-1 : disLik+1);
       setIsDisLiked(!isDisLiked);
@@ -186,7 +188,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
         setLik(lik-1);
         setClr("rgb(108, 104, 104)");      //grey
         setIsLiked(false);
-        await axios.put("/posts/"+ _id +"/like", {userId: currentUser._id});
+        await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/like`, {userId: currentUser._id});
       }
 
       notificationHandler("disliked")
@@ -209,7 +211,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
       }
 
       try{
-        await axios.put("/posts/"+ _id +"/comment", newComment);
+        await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/comment`, newComment);
         setNumberOfComments(numberOfComments+1);
         setCommentedText("");
         
@@ -258,7 +260,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
       }
 
       try{
-        await axios.put("/posts/"+ _id +"/comment/"+ particularCommentId + "/reply", newNestedComment);
+        await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/comment/${particularCommentId}/reply`, newNestedComment);
         setCommentedText("");
         
         notificationHandler("replied");
@@ -284,7 +286,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
 
     if(commentedText){
       try{
-        await axios.put("/posts/"+ _id +"/comment/"+ particularCommentId + "/edit", {updatedComment: commentedText});
+        await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/comment/${particularCommentId}/edit`, {updatedComment: commentedText});
         setCommentedText("");
         
         notificationHandler("commented");
@@ -312,8 +314,8 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
     try{
       const remove = window.confirm("Are you sure, you want to remove this post?");
       if(remove){
-        await axios.delete("/posts/"+ _id);
-        await axios.put("/users/"+currentUser._id, {userId: currentUser._id, totalPosts: user?.totalPosts-1});
+        await axios.delete(`${REACT_APP_BASE_URL}/posts/${_id}`);
+        await axios.put(`${REACT_APP_BASE_URL}/users/${currentUser._id}`, {userId: currentUser._id, totalPosts: user?.totalPosts-1});
 
         img?.map(item=>{
           const st1 = item.split('/o/')[1]
@@ -349,7 +351,7 @@ const Timeline = ({post, setPosts, isLik, isDisLik, socket}) => {
     }
 
     try{
-      await axios.put("/posts/"+_id, updatedPost)
+      await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}`, updatedPost)
       // window.location.reload();
       setEdit(false);
       setShowEmojisForEditDesc(false);

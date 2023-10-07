@@ -4,6 +4,7 @@ import axios from 'axios';
 import Topbar from '../components/Topbar';
 import Bottombar from '../components/Bottombar';
 import UsersList from '../components/UsersList';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const Search = () => {
     const {user:currentUser} = useContext(AuthContext);
@@ -13,7 +14,7 @@ const Search = () => {
 
     useEffect(()=>{
         const fetchUser = async() =>{
-          const res = await axios.get(`/users/${currentUser._id}`);
+          const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
           setUser(res.data);
         }
         fetchUser();
@@ -22,7 +23,7 @@ const Search = () => {
     useEffect(()=>{
         const fetchAllUsers = async() =>{
             try{
-                const res = await axios.get("/users");
+                const res = await axios.get(`${REACT_APP_BASE_URL}/users`);
                 const processedData = await Promise.all(res?.data?.map((item)=>{
                     const obj = {
                         _id: item?._id,

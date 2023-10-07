@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import bcrypt from 'bcryptjs';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const ChangePassword = ({setShowParticularPost, password, id}) => {
     const [focused, setFocused] = useState(false);
@@ -98,7 +99,7 @@ const ChangePassword = ({setShowParticularPost, password, id}) => {
               if(Object.keys(updatedData).length > 1){
                 setIsLoader(true);
                 setHideSaveBtn(true)
-                await axios.put("/users/"+id, updatedData);
+                await axios.put(`${REACT_APP_BASE_URL}/users/${id}`, updatedData);
 
                 setTimeout(()=>{
                     setIsLoader(false);

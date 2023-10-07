@@ -14,16 +14,11 @@ const Login = ()=> {
   const email = useRef();
   const password = useRef();
   const {dispatch} = useContext(AuthContext);
-  console.log(allUsers)
-
-  console.log(REACT_APP_BASE_URL);
   
   const clickHandler = async(e)=>{
     e.preventDefault();
     setInvalidCredential(false);
-    console.log('allUsers---------------',allUsers)
     const item = Object.values(allUsers)?.filter((item)=> item.email === email?.current?.value);
-    console.log('item--------------------',item)
 
     if(item.length>0){
       const validPassword = await bcrypt.compare(password.current.value, item[0].password)
@@ -39,7 +34,6 @@ const Login = ()=> {
   useEffect(()=>{
     const fetchAllUsers = async() =>{
       const res = await axios.get(`${REACT_APP_BASE_URL}/users`);
-      console.log('response--------------------',res?.data)
       setAllUsers(res?.data);
     }
     fetchAllUsers();

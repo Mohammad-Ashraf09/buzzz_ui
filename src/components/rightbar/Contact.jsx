@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import ContactPerson from './ContactPerson';
+import { REACT_APP_BASE_URL } from '../../config/keys';
 
 const Contact = ({user, isUserProfile, socket}) => {
     const [clr, setClr] = useState("#000");
@@ -17,7 +18,7 @@ const Contact = ({user, isUserProfile, socket}) => {
 
     useEffect(()=>{
         const fetchFollowings = async() =>{
-          const res = await axios.get("/users/"+user?._id);
+          const res = await axios.get(`${REACT_APP_BASE_URL}/users/${user?._id}`);
           setFollowing(res.data.followings);
         }
         fetchFollowings();

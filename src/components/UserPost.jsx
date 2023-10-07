@@ -7,6 +7,7 @@ import EmojiContainer from './emoji/EmojiContainer';
 import PostImage from './PostImage';
 import Comment from './timeline/Comment';
 import WhoLikedDisliked from './WhoLikedDisliked';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const UserPost = ({user, name, DP, post, isLik, isDisLik}) => {
     const {_id, userId, createdAt, location, edited, desc, taggedFriends, img, likes, dislikes, comments} = post;
@@ -51,7 +52,7 @@ const UserPost = ({user, name, DP, post, isLik, isDisLik}) => {
     const likeDislikeHandler = async(type) =>{
         if(type==='liked'){
             try{
-                await axios.put("/posts/"+ _id +"/like", {userId: currentUser._id});
+                await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/like`, {userId: currentUser._id});
           
                 setLik(isLiked ? lik-1 : lik+1);
                 setIsLiked(!isLiked)
@@ -65,7 +66,7 @@ const UserPost = ({user, name, DP, post, isLik, isDisLik}) => {
                   setDisLik(disLik-1);
                   setClr2("rgb(108, 104, 104)");   //grey
                   setIsDisLiked(false);
-                  await axios.put("/posts/"+ _id +"/dislike", {userId: currentUser._id});
+                  await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/dislike`, {userId: currentUser._id});
                 }
           
                 // notificationHandler("liked");
@@ -74,7 +75,7 @@ const UserPost = ({user, name, DP, post, isLik, isDisLik}) => {
         }
         else{
             try{
-                await axios.put("/posts/"+ _id +"/dislike", {userId: currentUser._id})
+                await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/dislike`, {userId: currentUser._id});
           
                 setDisLik(isDisLiked ? disLik-1 : disLik+1);
                 setIsDisLiked(!isDisLiked);
@@ -88,7 +89,7 @@ const UserPost = ({user, name, DP, post, isLik, isDisLik}) => {
                   setLik(lik-1);
                   setClr("rgb(108, 104, 104)");      //grey
                   setIsLiked(false);
-                  await axios.put("/posts/"+ _id +"/like", {userId: currentUser._id});
+                  await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/like`, {userId: currentUser._id});
                 }
           
                 // notificationHandler("disliked")
@@ -126,7 +127,7 @@ const UserPost = ({user, name, DP, post, isLik, isDisLik}) => {
             }
         
             try{
-                await axios.put("/posts/"+ _id +"/comment", newComment);
+                await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/comment`, newComment);
                 setNumberOfComments(numberOfComments+1);
                 setCommentedText("");
                 
@@ -169,7 +170,7 @@ const UserPost = ({user, name, DP, post, isLik, isDisLik}) => {
           }
     
           try{
-            await axios.put("/posts/"+ _id +"/comment/"+ particularCommentId + "/reply", newNestedComment);
+            await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/comment/${particularCommentId}/reply`, newNestedComment);
             setCommentedText("");
             
             // notificationHandler("replied");
@@ -195,7 +196,7 @@ const UserPost = ({user, name, DP, post, isLik, isDisLik}) => {
     
         if(commentedText){
           try{
-            await axios.put("/posts/"+ _id +"/comment/"+ particularCommentId + "/edit", {updatedComment: commentedText});
+            await axios.put(`${REACT_APP_BASE_URL}/posts/${_id}/comment/${particularCommentId}/edit`, {updatedComment: commentedText});
             setCommentedText("");
             
             // notificationHandler("commented");

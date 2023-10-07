@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext';
+import { REACT_APP_BASE_URL } from '../../config/keys';
 
 
 const Utility = () => {
@@ -11,7 +12,7 @@ const Utility = () => {
         const remove = window.confirm("Are you sure, you want to delete your account!");
     
         if(remove){
-            await axios.delete("/users/"+user._id);
+            await axios.delete(`${REACT_APP_BASE_URL}/users/${user._id}`);
             localStorage.clear();
             window.location.reload();
         }

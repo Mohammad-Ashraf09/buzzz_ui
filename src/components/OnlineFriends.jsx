@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from "axios";
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const OnlineFriends = ({onlineUsers, follow, user, conversations, setCurrentChat, setIsReply, setReplyFor}) => {
   const DP = follow.dp?.includes('https://') ? follow.dp : `/assets/${follow.dp}`;
@@ -29,7 +30,7 @@ const OnlineFriends = ({onlineUsers, follow, user, conversations, setCurrentChat
         const addToConversation = window.confirm("Do you want to start Conversation with this user?");
         if(addToConversation){
           try{
-            const res = await axios.post("/conversations/", {
+            const res = await axios.post(`${REACT_APP_BASE_URL}/conversations`, {
               senderId: user._id,
               receiverId: follow.id,
             });

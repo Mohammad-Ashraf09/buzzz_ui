@@ -6,6 +6,7 @@ import TopbarForLogin from '../components/TopbarForLogin';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../src/firebase";
 import Compressor from 'compressorjs';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const Signup = () => {
     const defaultDP = "/assets/default-dp.png";
@@ -176,7 +177,7 @@ const Signup = () => {
         if(values?.profilePicture){
             const saveDetailsToDB = async() => {
                 try{
-                    await axios.post("/auth/register", values);
+                    await axios.post(`${REACT_APP_BASE_URL}/auth/register`, values);
                     setIsLoader(false);
                     setHideSaveBtn(false);
                     navigate("/login");

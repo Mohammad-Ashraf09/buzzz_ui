@@ -10,6 +10,7 @@ import { storage } from "../firebase";
 import ProgressBar from "@ramonak/react-progress-bar";
 import Compressor from 'compressorjs';
 import Bottombar from '../components/Bottombar';
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const EditUserProfile = () => {
   const {user:currentUser} = useContext(AuthContext);
@@ -53,7 +54,7 @@ const EditUserProfile = () => {
 
   useEffect(()=>{
     const fetchAllUsers = async() =>{
-      const res = await axios.get("/users/");
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users`);
       const allUsers = res.data
       const usernameArray = allUsers.map(item => item.username)
       setUsernames(usernameArray);
@@ -63,7 +64,7 @@ const EditUserProfile = () => {
 
   useEffect(()=>{
     const fetchLoggedInUserData = async() =>{
-      const res = await axios.get(`/users/${currentUser._id}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
       const loggedInUser = res.data;
       setUser(loggedInUser);
 
@@ -400,7 +401,7 @@ const EditUserProfile = () => {
 
       try{
         if(Object.keys(updatedData).length > 1){
-          await axios.put("/users/"+currentUser._id, updatedData);
+          await axios.put(`${REACT_APP_BASE_URL}/users/${currentUser._id}`, updatedData);
           navigate(`/user/${currentUser._id}`);
         }
       }
@@ -414,7 +415,7 @@ const EditUserProfile = () => {
         };
 
         try{
-          await axios.put("/users/"+user._id+"/following", data);
+          await axios.put(`${REACT_APP_BASE_URL}/users/${user._id}/following`, data);
         }catch(err){
           console.log(err)
         }

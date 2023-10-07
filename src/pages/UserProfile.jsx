@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import Bottombar from "../components/Bottombar";
 import WhoLikedDisliked from "../components/WhoLikedDisliked";
 import UserPostGrid from "../components/UserPostGrid";
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 ChartJs.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -40,27 +41,35 @@ const UserProfile = () => {
 
   useEffect(()=>{
     const fetchUser = async() =>{
-      const res = await axios.get(`/users/${userId}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${userId}`);
       setUser(res.data);
     }
     fetchUser();
 
     const fetchLoggedInUser = async() =>{
-      const res = await axios.get(`/users/${currentUser._id}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
       setLoggedInUser(res.data);
     }
     fetchLoggedInUser();
-  },[userId]);
 
-  useEffect(()=>{
     const fetchUserPosts = async() =>{
-      const userPosts = await axios.get(`/posts/user/${userId}`);
+      const userPosts = await axios.get(`${REACT_APP_BASE_URL}/posts/user/${userId}`);
       setUserPosts(userPosts.data.sort((post1, post2)=>{
         return new Date(post2.createdAt) - new Date(post1.createdAt);
       }));
     }
     fetchUserPosts();
   },[userId]);
+
+  // useEffect(()=>{
+  //   const fetchUserPosts = async() =>{
+  //     const userPosts = await axios.get(`${REACT_APP_BASE_URL}/posts/user/${userId}`);
+  //     setUserPosts(userPosts.data.sort((post1, post2)=>{
+  //       return new Date(post2.createdAt) - new Date(post1.createdAt);
+  //     }));
+  //   }
+  //   fetchUserPosts();
+  // },[userId]);
 
   useEffect(()=>{
     const chunk = (array, size) => {
@@ -219,14 +228,14 @@ const UserProfile = () => {
   const followHandler = async () =>{
     try{
       if(followed){
-        await axios.put("/users/"+ user._id + "/unfollow", {
+        await axios.put(`${REACT_APP_BASE_URL}/users/${user._id}/unfollow`, {
           userId: currentUser._id,
           name: user.fname+" "+user.lname,
           dp: user?.profilePicture?.includes('https://') ? user?.profilePicture : `/assets/${user?.profilePicture}`,
         })
       }
       else{
-        await axios.put("/users/"+ user._id + "/follow", {
+        await axios.put(`${REACT_APP_BASE_URL}/users/${user._id}/follow`, {
           userId: currentUser._id,
           name: user.fname+" "+user.lname,
           dp: user?.profilePicture?.includes('https://') ? user?.profilePicture : `/assets/${user?.profilePicture}`,

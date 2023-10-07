@@ -10,6 +10,7 @@ import Bottombar from '../components/Bottombar';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import {io} from "socket.io-client";
+import { REACT_APP_BASE_URL } from '../config/keys';
 
 const Feed = () => {
   const {user:currentUser} = useContext(AuthContext);
@@ -20,7 +21,7 @@ const Feed = () => {
 
   useEffect(()=>{
     const fetchUser = async() =>{
-      const res = await axios.get(`/users/${currentUser._id}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
       setUser(res.data);
     }
     fetchUser();
@@ -28,8 +29,8 @@ const Feed = () => {
 
   useEffect(()=>{
     const fetchPosts = async() =>{
-      const res = await axios.get("/posts/timeline/"+currentUser._id);
-      setPosts(res.data.sort((post1, post2)=>{
+      const res = await axios.get(`${REACT_APP_BASE_URL}/posts/timeline/${currentUser._id}`);
+      setPosts(Object.values(res.data)?.sort((post1, post2)=>{
         return new Date(post2.createdAt) - new Date(post1.createdAt);
       }));
     }

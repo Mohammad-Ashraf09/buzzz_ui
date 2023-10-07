@@ -2,6 +2,7 @@ import { format } from 'timeago.js';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { REACT_APP_BASE_URL } from '../../config/keys';
 
 // user --> jisne post dali hai
 // currentUserId --> jisne login kiya hua hai uski id
@@ -39,7 +40,7 @@ const NestedComment = ({
                     setTextAfterTag(nestedComment?.nestedComment.substr(i+25));
                 }
             }
-            const res = await axios.get(`/users/${id}`);
+            const res = await axios.get(`${REACT_APP_BASE_URL}/users/${id}`);
             setTagName("@" + res.data.fname + " " + res.data.lname)
         }
         tagNameRefactor();
@@ -47,7 +48,7 @@ const NestedComment = ({
     
     useEffect(()=>{
         const fetchParticularNestedComment = async() =>{
-            const res = await axios.get("/posts/"+ postId +"/comment/"+ commentId + "/reply/" + nestedComment.nestedCommentId);
+            const res = await axios.get(`${REACT_APP_BASE_URL}/posts/${postId}/comment/${commentId}/reply/${nestedComment.nestedCommentId}`);
             // console.log(res.data)
 
             setParticularNestedComment(res.data);
@@ -60,7 +61,7 @@ const NestedComment = ({
 
     useEffect(()=>{
         const fetchUser = async() =>{
-            const res = await axios.get(`/users/${particularNestedComment?.nestedId}`);
+            const res = await axios.get(`${REACT_APP_BASE_URL}/users/${particularNestedComment?.nestedId}`);
             setNestedCommentUser(res.data);
           }
           fetchUser();
@@ -68,7 +69,7 @@ const NestedComment = ({
 
     const likeCommentHandler = async() =>{
         try{
-            await axios.put("/posts/"+ postId +"/comment/"+ commentId + "/like/" + particularNestedComment?.nestedCommentId + "/nestedLike/", {userId: currentUserId});
+            await axios.put(`${REACT_APP_BASE_URL}/posts/${postId}/comment/${commentId}/like/${particularNestedComment?.nestedCommentId}/nestedLike`, {userId: currentUserId});
 
             setNoOfLikes(isLiked ? noOfLikes-1 : noOfLikes+1);
             setIsLiked(!isLiked);
@@ -87,7 +88,7 @@ const NestedComment = ({
         try{
             const remove = window.confirm("Are you sure, you want to remove this comment?");
             if(remove){
-                await axios.put("/posts/"+ postId +"/comment/"+ commentId +  "/removeNestedComment/", {nestedCommentId: particularNestedComment?.nestedCommentId});
+                await axios.put(`${REACT_APP_BASE_URL}/posts${postId}/comment/${commentId}/removeNestedComment`, {nestedCommentId: particularNestedComment?.nestedCommentId});
                 // setNumberOfComments(numberOfComments-1);
                 setNestedComments((prev)=> prev.filter((item)=> item.nestedCommentId !== particularNestedComment?.nestedCommentId))
 

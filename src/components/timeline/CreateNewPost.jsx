@@ -11,6 +11,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase";
 import ProgressBar from "@ramonak/react-progress-bar";
 import Compressor from 'compressorjs';
+import { REACT_APP_BASE_URL } from '../../config/keys';
 
 const CreateNewPost = () => {
   const [file, setFile] = useState([]);
@@ -39,7 +40,7 @@ const CreateNewPost = () => {
 
   useEffect(()=>{
     const fetchUser = async() =>{
-      const res = await axios.get(`/users/${currentUser._id}`);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
       setUser(res.data);
     }
     fetchUser();
@@ -47,7 +48,7 @@ const CreateNewPost = () => {
 
   useEffect(()=>{
     const fetchFollowings = async() =>{
-      const res = await axios.get("/users/"+currentUser._id);
+      const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
       setFollowing(res.data.followings);
     }
     fetchFollowings();
@@ -150,13 +151,13 @@ const CreateNewPost = () => {
       }
 
       try{
-        await axios.post("/posts", newPost)         // to post the desc and file name to database
+        await axios.post(`${REACT_APP_BASE_URL}/posts`, newPost)         // to post the desc and file name to database
         window.location.reload();
       }
       catch(err){}
   
       try{
-        await axios.put("/users/"+currentUser._id, {userId: currentUser._id, totalPosts: user?.totalPosts+1});    // to update the total post count by 1
+        await axios.put(`${REACT_APP_BASE_URL}/users/${currentUser._id}`, {userId: currentUser._id, totalPosts: user?.totalPosts+1});    // to update the total post count by 1
       }
       catch(err){}
     }
