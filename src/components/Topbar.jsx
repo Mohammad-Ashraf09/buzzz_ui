@@ -72,7 +72,7 @@ const Topbar = ({user, socket, setShowPopup}) => {
         const logout = window.confirm("Are you sure, you want to logout?");
         if(logout){
             localStorage.clear();
-            window.location.href='http://localhost:3000/'
+            window.location.href='/'
             // window.location.reload();
         }
     }
