@@ -3,7 +3,7 @@ import axios from "axios";
 import { REACT_APP_BASE_URL } from '../config/keys';
 
 const OnlineFriends = ({onlineUsers, follow, user, conversations, setCurrentChat, setIsReply, setReplyFor}) => {
-  const DP = follow.dp?.includes('https://') ? follow.dp : `/assets/${follow.dp}`;
+  const DP = follow.dp ? follow.dp : `/assets/default-dp.png`;
   
   const clickHandler = async() =>{
     const collection = document.querySelectorAll('.conversation');     // this comes from Conversation.jsx

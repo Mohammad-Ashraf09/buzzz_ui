@@ -3981,7 +3981,7 @@ input:valid[focused="true"] ~ .tickkk{
 
     /* -------------------------Messenger page -------------------- */
     .conversation-mobile{
-        height: calc(100vh - 84px);
+        height: calc(100vh - 42px);
         min-height: 650px;
         width: 100vw;
         display: flex;
@@ -4118,7 +4118,7 @@ input:valid[focused="true"] ~ .tickkk{
 
     /* --------------------- chat area -------------------------- */
     .messenger{
-        height: calc(100vh - 84px);
+        height: calc(100vh - 42px);
         min-height: 650px;
         width: 100vw;
         display: flex;

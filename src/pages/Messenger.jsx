@@ -898,7 +898,7 @@ const Messenger = () => {
 
         </div>
       }
-      <Bottombar user={user}/>
+      {/* <Bottombar user={user}/> */}
 
       {showEmojis &&
         <EmojiContainer
