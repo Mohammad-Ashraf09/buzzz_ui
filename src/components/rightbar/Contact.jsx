@@ -35,7 +35,7 @@ const Contact = ({user, isUserProfile, socket}) => {
             <div className={isUserProfile ? "user-profile-z" : "z" }>
                 <div style={{color: clr}} className="contact-title">Contacts</div>
                 <div onMouseOver={changeColorWhite} onMouseOut={changeColorBlack} className="search-box">
-                    <input type="text" className={isUserProfile ? "user-profile-search-txt" : "search-txt" } name="" placeholder='Search Contacts' onChange={(e)=>setQuery(e.target.value)} />
+                    <input type="text" className={isUserProfile ? "user-profile-search-txt" : "search-txt" } name="" placeholder='Search Contacts' onChange={(e)=>setQuery(e.target.value.toLowerCase())} />
                     <a href="#" className={isUserProfile ? "user-profile-search-btn" : "search-btn" }>
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </a>

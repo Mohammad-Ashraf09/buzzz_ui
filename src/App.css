@@ -3125,11 +3125,11 @@ input:valid[focused="true"] ~ .tickkk{
 
 /*########################################### Search page #############################################*/
 .search{
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     display: flex;
     justify-content: center;
     height: calc(100vh - 84px);
-    min-height: 650px;
+    min-height: 652px;
     background-color: #03bfbc;
 }
 .search-wrapper{

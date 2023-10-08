@@ -401,7 +401,7 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
-      <Bottombar user={user}/>
+      <Bottombar user={loggedInUser}/>
     </>
   )
 }

@@ -53,7 +53,7 @@ const Search = () => {
                             className="conversation-search-box-input"
                             name=""
                             placeholder='Search You Want...'
-                            onChange={(e)=>setQuery(e.target.value)}
+                            onChange={(e)=>setQuery(e.target.value.toLowerCase())}
                         />
                         <div className='conversation-search-icon'> <i className="fa-solid fa-magnifying-glass"></i> </div>
                     </div>

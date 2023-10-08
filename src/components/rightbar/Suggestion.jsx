@@ -46,7 +46,7 @@ const Suggestion = ({socket}) => {
             <div className="z">
                 <div style={{color: clr}} className="contact-title">Suggestions</div>
                 <div onMouseOver={changeColorWhite} onMouseOut={changeColorBlack} className="search-box">
-                    <input type="text" className='search-txt' name="" placeholder='Search Suggestions' onChange={(e)=>setQuery(e.target.value)} />
+                    <input type="text" className='search-txt' name="" placeholder='Search Suggestions' onChange={(e)=>setQuery(e.target.value.toLowerCase())} />
                     <a href="#" className='search-btn'>
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </a>

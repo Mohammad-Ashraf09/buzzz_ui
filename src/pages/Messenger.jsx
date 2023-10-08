@@ -634,7 +634,7 @@ const Messenger = () => {
                       className="conversation-search-box-input"
                       name=""
                       placeholder={isChats ? 'Search Chat' : 'Search Contact'}
-                      onChange={(e)=>isChats ? setQuery1(e.target.value) : setQuery2(e.target.value)}
+                      onChange={(e)=>isChats ? setQuery1(e.target.value.toLowerCase()) : setQuery2(e.target.value.toLowerCase())}
                     />
                     <div className='conversation-search-icon'> <i className="fa-solid fa-magnifying-glass"></i> </div>
                   </div>
@@ -698,7 +698,7 @@ const Messenger = () => {
         <div className='messenger'>
           <div className="messenger-left">
             <div className="messenger-left-wrapper">
-              <input className='messenger-search' type="text" placeholder='Search for chat' onChange={(e)=>setQuery1(e.target.value)}/>
+              <input className='messenger-search' type="text" placeholder='Search for chat' onChange={(e)=>setQuery1(e.target.value.toLowerCase())}/>
               <div className="conversation-div">
                 {conversations.filter((x)=>x.otherMemberData.name?.toLowerCase().includes(query1)).map((c, index)=>(
                   <Conversation
@@ -877,7 +877,7 @@ const Messenger = () => {
 
           <div className="messenger-right">
             <div className="messenger-right-wrapper">
-              <input className='messenger-search search-online-friend' type="text" placeholder='Search for friend' onChange={(e)=>setQuery2(e.target.value)} />
+              <input className='messenger-search search-online-friend' type="text" placeholder='Search for friend' onChange={(e)=>setQuery2(e.target.value.toLowerCase())} />
               <h3 className='online-friend-heading'>Online Friends</h3>
               <div className="online-friend-div">
                 {following.filter((x)=>x.name.toLowerCase().includes(query2)).map((data)=>(

@@ -267,7 +267,7 @@ const CreateNewPost = () => {
       {showLocations ? (
         <div className='location-list-container'>
           <div className='location-search-filter'>
-            <input type="text" className='location-search-input' name="" placeholder='Search Location' onChange={(e)=>setQuery(e.target.value)} />
+            <input type="text" className='location-search-input' name="" placeholder='Search Location' onChange={(e)=>setQuery(e.target.value.toLowerCase())} />
           </div>
           <ul className="locations-list">
             {locationsList.sort().filter((x)=>x.toLowerCase().includes(query)).map((location)=>(
@@ -287,7 +287,7 @@ const CreateNewPost = () => {
       {showFriendList ? (
         <div className="friend-list-container">
           <div className='location-search-filter'>
-              <input type="text" className='location-search-input' name="" placeholder='Search Friend' onChange={(e)=>setQuery(e.target.value)} />
+              <input type="text" className='location-search-input' name="" placeholder='Search Friend' onChange={(e)=>setQuery(e.target.value.toLowerCase())} />
           </div>
           <ul className="friend-list">
               {following.filter((data)=>data.name.toLowerCase().includes(query)).map((friend)=>(
