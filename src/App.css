@@ -3131,12 +3131,10 @@ input:valid[focused="true"] ~ .tickkk{
     display: flex;
     justify-content: center;
     height: calc(100vh - 84px);
-    /* min-height: 652px; */
     background-color: #03bfbc;
 }
 .search-wrapper{
     box-sizing: border-box;
-    /* height: 97.5%; */
     width: 96%;
     margin: 0.5rem 0;
     background-color: white;
@@ -3648,8 +3646,7 @@ input:valid[focused="true"] ~ .tickkk{
 
     /* -------------------------User page -------------------- */
     .user{
-        height: calc(100vh - 84px);
-        min-height: 880px;
+        min-height: 800px;
         width: 100vw;
     }
     .user-graph-conatiner{
@@ -3779,7 +3776,8 @@ input:valid[focused="true"] ~ .tickkk{
     }
     .user-post-timeline{
         width: 100%;
-        height: 600px;
+        height: 575px;
+        border-radius: 6px;
     }
     .user-post-grid{
         display: flex;
@@ -4120,11 +4118,11 @@ input:valid[focused="true"] ~ .tickkk{
     /* --------------------- chat area -------------------------- */
     .messenger{
         height: calc(100vh - 42px);
-        min-height: 650px;
         width: 100vw;
         display: flex;
         background-color: #0c9a97;
         justify-content: center;
+        position: fixed;
     }
     .messenger-left{
         display: none;
@@ -4133,18 +4131,18 @@ input:valid[focused="true"] ~ .tickkk{
         display: none;
     }
     .messenger-center{
-        height: 100%;
         width: 100%;
     }
     .messenger-center-wrapper{
-        height: 100%;
-        width: 100%;
         padding: 0 6px;
-        box-sizing: border-box;
     }
     .chat-area-topbar{
-        height: 5.5%;
+        height: 40px;
+        width: 100%;
         font-size: 14px;
+        position: fixed;
+        top: 42px;
+        margin: 0;
     }
     .move-back-icon{
         margin-right: 1rem;
@@ -4161,11 +4159,14 @@ input:valid[focused="true"] ~ .tickkk{
         font-size: 12px;
         color: black;
     }
+    .clear-chat-icon{
+        margin-right: 1rem;
+    }
     .clear-chat-icon:hover + .clear-chat-text{
         display: none;
     }
     .chat-view-area{
-        margin-bottom: 6px;
+        margin-top: 40px;
     }
     .message{
         margin: 6px 0;
@@ -4262,13 +4263,13 @@ input:valid[focused="true"] ~ .tickkk{
     }
     .input-chat-area{
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
+        width: 98%;
+        position: fixed;
+        bottom: 2px;
     } 
     .input-chat{
         position: relative;
-        width: 90%;
+        width: 88%;
     }
     .reply-message-div{
         height: 60px;
@@ -4302,6 +4303,7 @@ input:valid[focused="true"] ~ .tickkk{
     }
     .media-div{
         height: 60px;
+        margin-bottom: 4px;
     }
     .review-pic{
         height: 42px !important;
@@ -4354,6 +4356,10 @@ input:valid[focused="true"] ~ .tickkk{
     }
     .message-send-icon:hover{
         transform: scale(1);
+    }
+    .chat-area-blurr{
+        top: 0;
+        height: calc(100vh - 42px);
     }
     .clicked-media-container{
         height: 280px;

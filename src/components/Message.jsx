@@ -379,7 +379,7 @@ const Message = ({
       </div>
 
       {showMediaPopup &&
-        <div className='blurr-div'>
+        <div className='blurr-div chat-area-blurr'>
           <ClickedMedia setShowMediaPopup={setShowMediaPopup} media={media} imageIndex={imageIndex} replyMessageHandler={replyMessageHandler}/>
         </div>
       }

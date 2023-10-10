@@ -391,7 +391,7 @@ const Messenger = () => {
       }
       saveMediaLinkToDatabaseWithEmptyText();
     }
-    if(sendMessageOnlyWithText){
+    if(sendMessageOnlyWithText && newMessage){
       const saveTextMsgToDatabase = async() => {
         const message={
           sender: currentUser._id,
@@ -496,7 +496,7 @@ const Messenger = () => {
                   <div
                     className="chat-view-area"
                     style={{
-                      height: (isReply || preview?.length>0) ? (isReply ? 'calc(84% - 47px)' : 'calc(86% - 12px)') : '86%'
+                      height: (isReply || preview?.length>0) ? (isReply ? 'calc(100vh - 202px)' : 'calc(100vh - 154px)') : 'calc(100vh - 142px)'
                     }}
                   >
                     {oldMessages.map((msg)=>(
