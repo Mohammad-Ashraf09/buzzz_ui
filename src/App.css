@@ -1776,10 +1776,12 @@ hr{
 /*----------------- timeline bottombar ----------------*/
 .bottombar-container{
     display: none;
-    position: sticky;
+    position: fixed;
     bottom: 0;
     background-color: white;
     z-index: 5497845;
+    box-sizing: border-box;
+    width: 100%;
     height: 42px;
     box-shadow: 0px 2px 5px var(--shadow-color);
     padding-left: 15px;
@@ -3444,8 +3446,8 @@ input:valid[focused="true"] ~ .tickkk{
         padding-bottom: 0.5rem;
     }
     .timeline-post-area{
-        margin: 1rem 0.5rem 0 0.5rem;
-        min-height: 650px;
+        margin: 1rem 0.5rem 1.5rem 0.5rem;
+        /* min-height: 650px; */
         height: calc(100vh - 84px);
     }
     .timeline-post-wrapper{
