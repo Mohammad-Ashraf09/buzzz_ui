@@ -3130,7 +3130,7 @@ input:valid[focused="true"] ~ .tickkk{
     box-sizing: border-box;
     display: flex;
     justify-content: center;
-    height: calc(100vh - 84px);
+    height: calc(100dvh - 84px);
     background-color: #03bfbc;
 }
 .search-wrapper{
