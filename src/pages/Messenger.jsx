@@ -496,7 +496,7 @@ const Messenger = () => {
                   <div
                     className="chat-view-area"
                     style={{
-                      height: (isReply || preview?.length>0) ? (isReply ? 'calc(100vh - 202px)' : 'calc(100vh - 154px)') : 'calc(100vh - 142px)'
+                      height: (isReply || preview?.length>0) ? (isReply ? 'calc(100dvh - 202px)' : 'calc(100dvh - 154px)') : 'calc(100dvh - 142px)'
                     }}
                   >
                     {oldMessages.map((msg)=>(

@@ -3804,13 +3804,13 @@ input:valid[focused="true"] ~ .tickkk{
 
     /* -------------------------Edit Profile page -------------------- */
     .edit-profile{
-        height: calc(100vh - 84px);
-        min-height: 652px;
+        height: calc(100dvh - 84px);
+        /* min-height: 652px; */
         width: 100vw;
         align-items: normal;
     }
     .edit-profile-wrapper{
-        height: 98%;
+        height: 97.5%;
         margin-top: 0.5rem;
         width: 96%;
     }
@@ -3980,7 +3980,7 @@ input:valid[focused="true"] ~ .tickkk{
 
     /* -------------------------Messenger page -------------------- */
     .conversation-mobile{
-        height: calc(100vh - 42px);
+        height: calc(100dvh - 42px);
         min-height: 650px;
         width: 100vw;
         display: flex;
