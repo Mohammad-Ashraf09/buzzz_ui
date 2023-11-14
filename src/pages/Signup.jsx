@@ -7,6 +7,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../src/firebase";
 import Compressor from 'compressorjs';
 import { REACT_APP_BASE_URL } from '../config/keys';
+import PopupLayout from '../components/popup/PopupLayout';
 
 const Signup = () => {
     const defaultDP = "/assets/default-dp.png";
@@ -29,6 +30,7 @@ const Signup = () => {
     const [dpPreview, setDpPreview] = useState(null);
     const [isLoader, setIsLoader] = useState(false);
     const [hideSaveBtn, setHideSaveBtn] = useState(false);
+    const [showTermsAndConditionsPopup, setShowTermsAndConditionsPopup] = useState(false);
     const navigate = useNavigate();
     const [values, setValues] = useState({
         fname:"",
@@ -189,6 +191,17 @@ const Signup = () => {
         }
     },[values?.profilePicture]);
 
+    const blurrScreenHandler = ()=>{
+        setShowTermsAndConditionsPopup(!showTermsAndConditionsPopup);
+    
+        if(!showTermsAndConditionsPopup){
+          document.body.style.overflow = "hidden";
+          document.body.scrollIntoView();
+        }
+        else
+          document.body.style.overflow = "auto";
+    }
+
     return (
         <>
             <TopbarForLogin/>
@@ -205,7 +218,15 @@ const Signup = () => {
 
                         <div className="agreement">
                             <input className='agreement-check' type="checkbox" name="agreement" onClick={disableHandler}/>
-                            <label htmlFor="agreement"> I agree all statements in <a href="">Terms of Service</a></label>
+                            <label htmlFor="agreement">
+                                I agree to all statements in&nbsp;
+                                <span
+                                    style={{color: '#417af5', textDecoration: 'underline', cursor: 'pointer'}}
+                                    onClick={blurrScreenHandler}
+                                >
+                                    Terms and Conditions
+                                </span>
+                            </label>
                         </div>
 
                         <div className='navigations'>
@@ -312,7 +333,15 @@ const Signup = () => {
 
                         <div className="agreement">
                             <input className='agreement-check' type="checkbox" name="agreement" onClick={disableHandler}/>
-                            <label htmlFor="agreement"> I agree all statements in <a href="">Terms of Service</a></label>
+                            <label htmlFor="agreement">
+                                I agree to all statements in&nbsp;
+                                <span
+                                    style={{color: '#417af5', textDecoration: 'underline', cursor: 'pointer'}}
+                                    onClick={blurrScreenHandler}
+                                >
+                                    Terms and Conditions
+                                </span>
+                            </label>
                         </div>
 
                         <div className='navigations'>
@@ -326,7 +355,16 @@ const Signup = () => {
                         </div>
                     </form>
                 </div>
-            </div> 
+            </div>
+            
+            {showTermsAndConditionsPopup && <div className='blurr-div blurr-div-terms-conditions'>
+                <PopupLayout
+                    blurrScreenHandler={blurrScreenHandler}
+                    popup='TermsAndConditionsPopup'
+                    height={window.innerWidth<=420 ? '240px' : '400px'}
+                    width={window.innerWidth<=420 ? '96%' : '600px'}
+                />
+            </div>}
         </>
     )
 }
