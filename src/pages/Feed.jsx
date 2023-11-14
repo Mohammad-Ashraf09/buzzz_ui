@@ -38,7 +38,7 @@ const Feed = () => {
   },[currentUser._id]);
 
   useEffect(()=>{
-    setSocket(io("ws://localhost:8100"));
+    setSocket(io("localhost:8100"));
   },[]);
 
   useEffect(()=>{

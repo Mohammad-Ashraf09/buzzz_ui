@@ -55,7 +55,7 @@ const Messenger = () => {
   const newMessages = messages.slice(messages?.length-noOfNewmessages, messages?.length);
 
   useEffect(()=>{
-    setSocket(io("ws://localhost:8100"));
+    setSocket(io("localhost:8100"));
 
     const fetchUser = async() =>{
       const res = await axios.get(`${REACT_APP_BASE_URL}/users/${currentUser._id}`);
